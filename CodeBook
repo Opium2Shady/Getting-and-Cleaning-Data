@@ -1,0 +1,46 @@
+##Project Description
+
+This project is to collect data and prepare a tidy data set for later analysis from the experiment data of human activity recognition using smartphones data set. More information about the experiments can be found at http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones.
+
+##Raw Data Collection
+
+The data for this project is available at https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+
+The folder includes the following data sets that are being used:
+- 'features.txt': List of all features.
+- 'activity_labels.txt': Links the class labels with their activity name.
+- 'train/X_train.txt': Training set.
+- 'train/y_train.txt': Training labels.
+- 'test/X_test.txt': Test set.
+- 'test/y_test.txt': Test labels.
+- 'train/subject_train.txt' and 'test/subject_test.txt': Each row identifies the subject who performed the activity for each window sample for training and test set respectively. Its range is from 1 to 30.
+
+## Description on how to create the tidy data file 
+
+1.	Download the above data and unzip to working directory.
+2.	Load the activity labels in 'activity_labels.txt' and features in 'features.txt' and assign the value to variables ‘activity_labels’ and ‘features’. 
+3.	Select only mean and standard deviation in variable ‘features’ using ‘grep’ function, and assign to variable ‘features_need’.
+4.	Load the data in files ‘X_train.txt’, ‘y_train.txt', ‘X_test.txt', ‘y_test.txt' 'subject_train.txt' and 'subject_test.txt' to variables ‘data_train’, ‘label_train’, ‘data_test’, ‘label_test’, ‘subject_train’ and ‘subject_test’. Filter ‘data_train’ and ‘data_test’ with columns matching ‘features_need’ to create variables ‘data_train_need’ and ‘data_test_need’.
+5.	Use function ‘cbind’ to combine ‘subject_train’, ‘label_train’ and ‘data_train_need’ to create variable ‘train’. Similarly, combine ‘subject_test’, ‘label_test’ and ‘data_test_need’ to get variable ‘test’. 
+6.	Use function ‘rbind’ to merge “train” and “test” to get variable “mergeddata”.
+7.	Use function ‘gsub’ to replace ‘-‘ with ‘_’ and remove ‘()’ in column 2 of “features_need”. Rename column names in “mergeddata” to ‘subject’, ‘activity’ and features in ‘features_need’ column 2. 
+8.	Use ‘factor’ function to name the activity column in “mergeddata” using the descriptive activity names in ‘activity_labels’. 
+9.	To take the average of each variable in “mergeddata” for each activity and each subject, use ‘aggregate’ function and FUN = mean and get a new tidy data set ‘summary_data’. Rename the first two columns of ‘summary_data’ to ‘subject’ and ‘activity’. Write the output to ‘summary_data.txt’ in working directory. 
+
+## Descriptions of new variables
+
+activity_labels: link class labels with their activity name
+features: list of all features
+features_need: feactures containing mean (‘mean’)and standard deviation(‘std’)
+data_train: training set
+data_train_need: training set with features containing mean and standard deviation
+label_train: training labels
+subject_train: each row identifies the subject who performed the activity for each window sample for training set
+data_test：test set
+data_test_need: test set with features containing mean and standard deviation
+label_test: test labels
+subject_test: each row identifies the subject who performed the activity for each window sample for test set
+train: training set together with subject and activity
+test: test set together with subject and activity
+mergeddata: merged data set including both train and test
+summary_data: summary data set with the average of each variable for each activity and each subject
